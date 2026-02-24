@@ -1,5 +1,6 @@
 import EventCard from '@/components/EventCard'
 import ExploreBtn from '@/components/ExploreBtn'
+import FeaturedEventsTracker from '@/components/FeaturedEventsTracker'
 import React from 'react'
 import { events } from '@/lib/constants'
 
@@ -11,11 +12,12 @@ import { events } from '@/lib/constants'
 export default function page() {
   return (
     <section>
-      <h1 className='text-center'> The Hub for Every Dev <br/> Event You Can't Miss</h1>
+      <h1 className='text-center'> The Hub for Every Dev <br/> Event You Can&apos;t Miss</h1>
       <p className='text-center mt-5'>Hackthons, Meetups and Conferneces, All in One Place</p>
       <ExploreBtn/>
 
       <div className="mt-20 space-y-7">
+        <FeaturedEventsTracker eventCount={events.length} />
         <h3>Featured Events</h3>
         <ul className="events list-none">
           {events.map((event) => (
