@@ -84,7 +84,7 @@ const EventSchema = new Schema<IEvent>(
 );
 
 // Pre-save hook: slug generation, date normalization, and time formatting
-EventSchema.pre<IEvent>("save", function (next) {
+EventSchema.pre<IEvent>("save", function () {
   // Only regenerate slug if title was modified
   if (this.isModified("title")) {
     this.slug = this.title
@@ -99,7 +99,7 @@ EventSchema.pre<IEvent>("save", function (next) {
   if (this.isModified("date")) {
     const parsed = new Date(this.date);
     if (isNaN(parsed.getTime())) {
-      return next(new Error(`Invalid date format: "${this.date}"`));
+      throw new Error(`Invalid date format: "${this.date}"`);
     }
     this.date = parsed.toISOString().split("T")[0];
   }
@@ -108,8 +108,6 @@ EventSchema.pre<IEvent>("save", function (next) {
   if (this.isModified("time")) {
     this.time = this.time.trim().toUpperCase();
   }
-
-  next();
 });
 
 // Export the model, reusing it if already compiled (important in Next.js dev mode)
